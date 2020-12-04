@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+  <br>
+  <h5>Запитання {{question.ques_num}}/{{j}}</h5>
+  <h1>{{question.ques}}</h1>
+  <br>
+  <form  action="{% url 'testing:processing' token %}" method="post">
+
+  {% csrf_token %}
+  {% if q_true > 1 %}
+    <p>Виберіть декілька правильних відповідей</p>
+  {% else %}
+    <p>Виберіть одну правельну відповідь</p>
+  {% endif %}
+  {% for a in answers %}
+    {% if a.ans %}
+
+        {% if q_true > 1 %}
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input aria-label="Checkbox for following text input" type="checkbox" name="{{a.ans}}" value="{{a.ans}}">
+              </div>
+            </div>
+            <input class="form-control" aria-label="Text input with checkbox" readonly value="{{a.ans}}" class="mr-5 ml-2">
+          </div>
+        {% else %}
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <input aria-label="Checkbox for following text input" type="radio"  name="{{a.ans}}" value="{{a.ans}}">
+              </div>
+            </div>
+            <input class="form-control" aria-label="Text input with checkbox" readonly value="{{a.ans}}" class="mr-5 ml-2">
+          </div>
+        {% endif %}
+    {% endif %}
+  {% endfor %}
+  <br>
+  <button  class="btn btn-success mt-5 mb-5"  type="submit" name="button">Відповіти</button>
+    </form>
+{% endblock %}

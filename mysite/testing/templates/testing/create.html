@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Створення тесту{% endblock %}
+
+{% block content %}
+  <h1 class="mb-5">Створити новий тест</h1>
+  <form class="was-validated" action="{% url 'testing:create_page'  %}" method="post">
+      {% csrf_token %}
+      <input  required class="form-control" type="text" placeholder="Назва тесту" name="name">
+      <div class="invalid-feedback ">Введіть назву тесту</div>
+
+      <a href=""><button class="btn btn-success mt-3 mb-5" type="submit">Створити</button></a>
+  </form>
+
+{% endblock %}

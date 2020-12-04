@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+  <h1>Вітаємо на проєкті Testing!</h1>
+  <span>Середовище створення та проходження тестів</span>
+  <h3 class="mt-5 mb-5">Топ 5 найбільш пройдених тестів:</h3>
+
+  {% if latest_popular_list %}
+    {% for a in latest_popular_list %}
+        <div class="card text-center mb-3">
+            <div class="card-body">
+              <h4 class="card-title">Назва тесту - {{a.testname}}</h4>
+              <p class="card-text">
+                <b>Кількість проходжень:</b> {{a.number_passed}}
+              </p>
+              <p class="card-text">
+                <b>Автор тесту:</b> {{a.author}}
+              </p>
+              <a href="{% url 'testing:about_test' a.testcode %}" class="btn btn-primary">Переглянути</a>
+            </div>
+            <div class="card-footer text-muted">
+              Створено: {{a.date}}
+            </div>
+          </div>
+
+    {% endfor %}
+  {% else %}
+      Тести не знайдені
+  {% endif %}
+{% endblock %}

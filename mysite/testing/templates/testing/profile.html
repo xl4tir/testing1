@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Профіль{% endblock %}
+
+{% block content %}
+  <h1>Ваш кабінет</h1>
+  <p class="mt-5"><b>Ваше ім'я</b> - {{request.user}}</p>
+  <div class="row mt-5">
+    <br>
+    <div class="col">
+      <h3>Останні пройдені</h3>
+       {% for a in latest_complete_list %}
+         <div class="card text-center mb-3">
+           <div class="card-body">
+             <h4 class="card-title">Тест - {{a.testname}}</h4>
+
+             <a href="{% url 'testing:complete' a.token %}" class="btn btn-secondary">Переглянути</a>
+           </div>
+           <div class="card-footer text-muted">
+             Пройдено: {{a.date}}
+           </div>
+         </div>
+       {% endfor %}
+
+    </div>
+    <div class="col">
+      <h3>Останні створені</h3>
+      {% for a in latest_created_list %}
+        <div class="card text-center mb-3">
+          <div class="card-body">
+            <h4 class="card-title">Тест - {{a.testname}}</h4>
+
+            <a href="{% url 'testing:builder' a.testcode %}" class="btn btn-info">Редагувати</a>
+            <a href="{% url 'testing:detele_test' a.testcode %}" class="btn btn-danger">Видалити</a>
+          </div>
+          <div class="card-footer text-muted">
+            Створено: {{a.date}}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

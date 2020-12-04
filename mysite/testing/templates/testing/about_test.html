@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{test.testname}}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-8">
+    <h1>Тест - {{test.testname}}</h1>
+  </div>
+  <div class="col-4">
+    <button  class="btn btn-success mt-2 mb-5" onclick="location.href='{% url 'testing:testing' token %}'" type="submit" name="button">Почати тестування</button>
+  </div>
+</div>
+
+
+  {% for n in questions %}
+     <br>
+    <ul class="list-group ">
+
+        <div class="col-auto mr-auto">
+           <h3><p class="ml-5">Запитання {{n.ques_num}}:</p></h3>
+         </div>
+
+
+
+    <li class="list-group-item" style="background:lightgrey" "><font size="5">{{n.ques}}</font></li>
+    {% for m in answers %}
+        {% if m.ques_num == n.ques_num %}
+            {% if m.ans %}
+              <li class="list-group-item " ><b><span >{{m.ans}}</span></b></li>
+            {% endif %}
+        {% endif %}
+  
+    {% endfor %}
+  </ul>
+
+  {% endfor %}
+
+{% endblock %}

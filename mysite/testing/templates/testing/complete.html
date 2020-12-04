@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+  <h1>Всього запитань - {{q_quess}}</h1>
+  <h2>Сума балів - {{q_ans_complete_correct}}/{{q_ans_correct}}</h2>
+  <h2>Результат - ({{result}} %)</h2>
+  <h2>Оцінка - {{mark}}/12</h2>
+
+  {% for n in quess %}
+     <br>
+    <ul class="list-group ">
+
+        <div class="col-auto mr-auto">
+           <h3><p class="ml-5">Запитання {{n.ques_num}}:</p></h3>
+         </div>
+
+
+
+    <li class="list-group-item" style="background:lightgrey" ><font size="5">{{n.ques}}</font></li>
+    {% for m in answers %}
+        {% if m.ques_num == n.ques_num %}
+            {% if m.ans %}
+          
+                {% if m.ans_value == 'on' %}
+                  <li class="list-group-item " style="background:lightgreen"  ><b><span >{{m.ans}}</span></b></li>
+                {% else %}
+                  <li class="list-group-item " ><b><span >{{m.ans}}</span></b></li>
+                {% endif %}
+
+            {% endif %}
+        {% endif %}
+
+    {% endfor %}
+  </ul>
+  {% endfor %}
+{% endblock %}

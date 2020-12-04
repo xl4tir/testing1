@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+  <h1></h1>
+  <br>
+  <h1>Додати запитання</h1><br>
+  <form class="was-validated" action="{% url 'testing:editing_ques' test.testcode ques_num %}" method="POST">
+    {% csrf_token %}
+
+    <textarea required rows="5" cols="45" class="form-control"  placeholder="Ваше запитання" name="ques">{{ques.ques}}</textarea>
+
+    <div class="invalid-feedback">Введіть питання</div>
+
+    <p class="mt-5">Варіанти відповідей:</p>
+    <p style="color:red"><b>Увага!</b> Обов'язково вкажіть правильну відповідь у відповідному квадраті</p>
+    {% for a in q %}
+      {% for b in ans %}
+        {% if a == b.ans_num %}
+          {% if b.ans_value == "on" %}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input checked type="checkbox" aria-label="Checkbox for following text input" name="checkans{{a}}" value="on" >
+                  </div>
+                </div>
+                <input value="{{b.ans}}" class="form-control" aria-label="Text input with checkbox" type="text" placeholder="Питання {{a}}" name="ans{{a}}"><br>
+
+              </div>
+          {% else %}
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <input  type="checkbox" aria-label="Checkbox for following text input" name="checkans{{a}}" value="on" >
+                  </div>
+                </div>
+                <input value="{{b.ans}}" class="form-control" aria-label="Text input with checkbox" type="text" placeholder="Питання {{a}}" name="ans{{a}}"><br>
+              </div>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+    <p style="color:red"><b>Всі відповіді не можуть бути правильними</b></p>
+    <button  type="submit"  class="btn btn-success mt-2 mb-5">Редагувати</button>
+
+  </form>
+  {{mes}}
+{% endblock %}
